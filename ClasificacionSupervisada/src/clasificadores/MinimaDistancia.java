@@ -5,6 +5,7 @@
  */
 package clasificadores;
 
+import herramientas.Distancias;
 import java.util.ArrayList;
 import objetos.Media;
 import objetos.Patron;
@@ -30,7 +31,7 @@ public class MinimaDistancia implements ClasificadorSupervisado{
        // recorrer todos los elementos de mi conjunto de entrenamiento
        for(Patron patron:conjuntoEntrenamiento){
            // TODO: PASAR EL ELEMENTO QUE BUSCARÁ EN LA LISTA DE MEDIAS
-         int indice = verifiqueExistenciaDeClase();
+         int indice = verifiqueExistenciaDeClase(patron.getClase());
            if(indice==-1){
             // creamos la nueva media
             Media nuevaMedia = new Media(patron.getVector().clone(),patron.getClase());
@@ -40,15 +41,42 @@ public class MinimaDistancia implements ClasificadorSupervisado{
           acumularAMedia(indice,patron);
         }
        }
+       // calculamos las medias
+       for(Media media: this.medias)
+           media.divide();
+     
     }
 
     @Override
     public String clasifica(Patron patron) {
-        return null;
+        String nC="";
+        if (this.medias.size()>0){
+        double distM = Distancias.calculaDistanciaEcuclidiana(patron, this.medias.get(0));
+        nC =  this.medias.get(0).getClase();
+        // recorrer todas las medias
+         for (Media aux: this.medias){
+         // comparar distancias 
+         double distAux = Distancias.calculaDistanciaEcuclidiana(patron,(Patron)aux);
+         if(distAux<distM){
+           distM = distAux;
+           nC =  aux.getClase();
+         }
+         
+         }
+        }
+              
+        return nC;
     }
 
-    private int verifiqueExistenciaDeClase() {
-        return 0;
+    private int verifiqueExistenciaDeClase(String clase) {
+              
+        // recorrer la lista de medias
+        for (int x=0; x < this.medias.size();x++){
+          if (clase.equals(this.medias.get(x).getClase())){
+           return x;
+          }
+        }
+        return -1;
     }
 
     private void acumularAMedia(int indice, Patron patron) {

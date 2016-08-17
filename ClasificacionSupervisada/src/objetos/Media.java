@@ -27,6 +27,12 @@ public class Media extends Patron{
     public void acumula(){
         this.setAcumalador(this.getAcumalador() + 1);
     }
+    
+    public void divide(){
+      for (int x=0; x< super.getVector().length;x++){
+      super.getVector()[x] /=this.acumalador;
+      }
+    }
 
     /**
      * @return the acumalador
