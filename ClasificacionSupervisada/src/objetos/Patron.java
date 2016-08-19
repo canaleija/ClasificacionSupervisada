@@ -30,6 +30,13 @@ public class Patron {
         this.clase = clase;
     }
 
+    public Patron(Patron patron) {
+        this.vector = patron.getVector().clone();
+        this.clase = patron.getClase();
+    }
+    
+    
+
     /**
      * @return the vector
      */
