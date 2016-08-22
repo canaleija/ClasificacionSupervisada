@@ -6,8 +6,12 @@
 package clasificacionsupervisada;
 
 import clasificadores.MinimaDistancia;
-import herramientas.GeneradorDeInstancias;
+import herramientas.GeneradorDeInstanciasDeEntrenamiento;
+import herramientas.Tokenizador;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import objetos.Patron;
 
 /**
@@ -20,27 +24,31 @@ public class ClasificacionSupervisada {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
-        
-      // MinimaDistancia md = new MinimaDistancia();
-       ArrayList<Patron> ce = new ArrayList<>(); 
-      
-       ce.add(new Patron(new double[]{5,2,3.5,1}, "Versicolor"));
-       ce.add(new Patron(new double[]{5.1,3.5,1.4,0.2}, "Setosa"));
-       
-       ce.add(new Patron(new double[]{4.7,3.2,1.3,0.2}, "Setosa"));
-          
-       
-       ce.add(new Patron(new double[]{5.9,3.0,4.2,1.5}, "Versicolor"));
-       ce.add(new Patron(new double[]{4.9,3.0,1.4,0.2}, "Setosa"));
-       ce.add(new Patron(new double[]{6,2.2,4,1}, "Versicolor"));
-       ce.add(new Patron(new double[]{6,2.2,4,1}, "Versicolor"));
-       ce.add(new Patron(new double[]{6,2.2,4,1}, "Versicolor"));
-
-       // md.entrenar(ce);
-       GeneradorDeInstancias ge = new GeneradorDeInstancias(ce);
-       
-       //String resutlado = md.clasifica(new Patron(new double[]{5,2,3.5,1}, "desconocido"));
+        try {
+            // TODO code application logic here
+            
+            // MinimaDistancia md = new MinimaDistancia();
+            // leer el archivo
+            
+            ArrayList<Patron> bd = Tokenizador.abrirFile();
+           
+            GeneradorDeInstanciasDeEntrenamiento ge = new GeneradorDeInstanciasDeEntrenamiento(bd);
+            ArrayList<Patron> ce = ge.filtraUniformente(50);
+            MinimaDistancia md = new MinimaDistancia();
+            md.entrenar(ce);
+            // todo A
+            for (Patron p: bd){
+             String resultado =  md.clasifica(p);
+             System.out.println(resultado);
+            }
+            
+            
+            
+            
+            //String resutlado = md.clasifica(new Patron(new double[]{5,2,3.5,1}, "desconocido"));
+        } catch (IOException ex) {
+            Logger.getLogger(ClasificacionSupervisada.class.getName()).log(Level.SEVERE, null, ex);
+        }
        
       
     }

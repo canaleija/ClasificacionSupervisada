@@ -13,16 +13,18 @@ public class Patron {
     
     // arreglo de doubles para crear como tal el patron
     private double[] vector;
-    private String clase;
+    private String clase,claseRes;
 
     // constructor por defecto
     public Patron(int n) {
         this.vector = new double[n];
         this.clase = "Desconocida";
+        this.claseRes = null;
     }
     public Patron(int n,String clase){
         this.vector = new double[n];
         this.clase = clase;
+        this.claseRes = null;
     }
 
     public Patron(double[] vector, String clase) {
@@ -76,7 +78,19 @@ public class Patron {
         
         return aux; //To change body of generated methods, choose Tools | Templates.
     }
+
+    /**
+     * @param claseRes the claseRes to set
+     */
+    public void setClaseRes(String claseRes) {
+        this.claseRes = claseRes;
+    }
     
+    
+    public boolean verificaClasificacion(){
+      return clase.equals(claseRes);
+     
+    }
     
     
     

@@ -13,13 +13,13 @@ import objetos.Patron;
  *
  * @author Roberto Cruz Leija
  */
-public class GeneradorDeInstancias {
+public class GeneradorDeInstanciasDeEntrenamiento {
     
     private ArrayList<Patron> bd;
     private ArrayList<Clase> clases;
     private ArrayList<Patron> instanciaFinal;
 
-    public GeneradorDeInstancias(ArrayList<Patron> bd) {
+    public GeneradorDeInstanciasDeEntrenamiento(ArrayList<Patron> bd) {
         this.clases = new ArrayList<>();
         this.instanciaFinal = new ArrayList<>();
         this.bd = bd;
@@ -48,9 +48,9 @@ public class GeneradorDeInstancias {
             }
         
         }else {
-        return this.bd;
+        return (ArrayList<Patron>)this.bd.clone();
         }
-    return null;
+    return this.instanciaFinal ;
     }
 
     private void analizarBD() {
