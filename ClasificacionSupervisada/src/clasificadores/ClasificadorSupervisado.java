@@ -16,5 +16,6 @@ public interface ClasificadorSupervisado {
     
     void entrenar(ArrayList<Patron> conjuntoEntrenamiento);
     String clasifica(Patron patron);
+    void clasificaConjunto(ArrayList<Patron> conjunto);
     
 }

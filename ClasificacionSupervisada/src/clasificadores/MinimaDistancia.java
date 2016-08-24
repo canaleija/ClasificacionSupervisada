@@ -87,4 +87,16 @@ public class MinimaDistancia implements ClasificadorSupervisado{
        this.medias.get(indice).acumula();
     }
     
+    @Override
+    public void clasificaConjunto(ArrayList<Patron> conjunto){
+        // recorremos todo el conjunto 
+        for (Patron p : conjunto){
+            // obteniendo el resultado de clasifiacion
+        String resultado = clasifica(p);
+        // seteando el resultado
+        p.setClaseRes(resultado);
+        
+        }
+        
+    }
 }
