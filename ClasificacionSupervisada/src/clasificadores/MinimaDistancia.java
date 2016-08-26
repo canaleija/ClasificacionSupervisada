@@ -5,7 +5,7 @@
  */
 package clasificadores;
 
-import herramientas.Distancias;
+import herramientas.Herramientas;
 import java.util.ArrayList;
 import objetos.Media;
 import objetos.Patron;
@@ -51,12 +51,12 @@ public class MinimaDistancia implements ClasificadorSupervisado{
     public String clasifica(Patron patron) {
         String nC="";
         if (this.medias.size()>0){
-        double distM = Distancias.calculaDistanciaEcuclidiana(patron, this.medias.get(0));
+        double distM = Herramientas.calculaDistanciaEcuclidiana(patron, this.medias.get(0));
         nC =  this.medias.get(0).getClase();
         // recorrer todas las medias
          for (Media aux: this.medias){
          // comparar distancias 
-         double distAux = Distancias.calculaDistanciaEcuclidiana(patron,(Patron)aux);
+         double distAux = Herramientas.calculaDistanciaEcuclidiana(patron,(Patron)aux);
          if(distAux<distM){
            distM = distAux;
            nC =  aux.getClase();

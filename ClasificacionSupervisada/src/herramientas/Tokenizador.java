@@ -24,7 +24,7 @@ public class Tokenizador {
     
   
 
-    public static ArrayList abrirFile() throws IOException {
+    public static ArrayList<Patron> abrirFile() throws IOException {
      String texto, aux;
      LinkedList<String> lista = new LinkedList();
      ArrayList<Patron> patrones = new ArrayList<>();
