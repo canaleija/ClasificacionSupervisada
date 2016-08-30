@@ -33,9 +33,9 @@ public class ClasificacionSupervisada {
                     new GeneradorDeInstanciasDeEntrenamiento(Tokenizador.abrirFile());
             ArrayList<Patron> ce = gi.filtraUniformente(100);
             
-            Knn knn = new Knn(3);
+            Knn knn = new Knn(6);
             knn.entrenar(ce);
-            knn.clasifica(new Patron(new double[]{5.1,3.5,1.4,0.2},"Setosa"));
+            knn.clasifica(new Patron(new double[]{6.7,3.1,4.7,1.5},"Versicolor"));
             
             
 //        ArrayList<ClasificadorSupervisado> clasificadores = new ArrayList<>();

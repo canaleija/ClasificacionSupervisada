@@ -6,6 +6,7 @@
 package clasificadores;
 
 import java.util.ArrayList;
+import objetos.Contador;
 import objetos.Distancias;
 import objetos.Patron;
 
@@ -22,6 +23,7 @@ public class Knn implements ClasificadorSupervisado{
     public Knn(int k) {
         this.conjuntoEntrenamiento = null;
         this.distancias = null;
+        this.k = k;
     }
     
     
@@ -43,8 +45,10 @@ public class Knn implements ClasificadorSupervisado{
        calculaDistancias(patron);
        // ordenamos las distancias 
        herramientas.Herramientas.quicksort(distancias,0,distancias.length-1);
+       // verificar los k vecinos mas cercanos : clase resultado
+       String resultado = verificarK();
        System.out.println();
-               return null;
+               return resultado;
     }
 
     @Override
@@ -62,6 +66,46 @@ public class Knn implements ClasificadorSupervisado{
                x++;  
            }
            System.out.println();
+    }
+
+    private String verificarK() {
+        // recorrer toda la lista de distancias 
+        // contadores 
+        ArrayList<Contador> contadores = new ArrayList<>();
+        int x = 0;
+        boolean encontrado = false;
+        while (!encontrado && x < this.distancias.length-1){
+        // acumular 
+        String clase = this.distancias[x].getClase();
+        int i = contadores.indexOf(new Contador(0, clase));
+        if (i == -1){
+        // creamos uno nuevo
+        contadores.add(new Contador(1, clase));
+        }else {
+        // existe y lo vamos a acumular 
+        contadores.get(i).acumula();
+        }
+        x++; 
+        encontrado = siFueAlcanzadoK(contadores);
+        }
+        if (encontrado){
+         return this.distancias[x-1].getClase();
+        }else {
+        return "Desconocida";
+        }
+        
+        
+       
+    }
+
+    private boolean siFueAlcanzadoK(ArrayList<Contador> contadores) {
+       // recorrer la lista de contadores y en cuanto 
+       // encuentre alguno que es igual a k regresamos un true
+       for (Contador aux : contadores){
+          if (aux.getCantidad()==this.k)
+              return true;
+       }
+       return false;
     }
     
 }
