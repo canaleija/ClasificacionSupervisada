@@ -8,12 +8,13 @@ package clasificacionsupervisada;
 import clasificadores.ClasificadorSupervisado;
 import clasificadores.Knn;
 import clasificadores.MinimaDistancia;
-import herramientas.GeneradorDeInstancias;
+import herramientas.GeneradorDeInstanciasTODELETE;
 import herramientas.Tokenizador;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import objetos.AmbienteDeClasificacion;
 import objetos.EscenarioDeClasificacion;
 import objetos.Instancias;
 import objetos.Patron;
@@ -32,16 +33,19 @@ public class ClasificacionSupervisada {
         try {
               ArrayList<Patron> bd = Tokenizador.abrirFile();
               Instancias.bdOriginal = bd;
-              Instancias.
-            GeneradorDeInstancias gi =
-                    new GeneradorDeInstancias(bd);
-           
-            ArrayList<Patron> ce = gi.filtraUniformente(100);
+              // generar las instancias de entrenamiento y clasificacion 
             
-            Knn knn = new Knn(6);
-            knn.entrenar(ce);
-            knn.clasifica(new Patron(new double[]{6.7,3.1,4.7,1.5},"Versicolor"));
+            ArrayList<AmbienteDeClasificacion> ambientes = new ArrayList<>();
             
+            ArrayList<Patron> ie = Instancias.nPorRandomBD(80);
+            ArrayList<Patron> ic = Instancias.nPorRandomClase(50);
+            ambientes.add(new AmbienteDeClasificacion(ie, ic));
+            System.out.println();
+            
+//            Knn knn = new Knn(6);
+//            knn.entrenar(ce);
+//            knn.clasifica(new Patron(new double[]{6.7,3.1,4.7,1.5},"Versicolor"));
+//            
             
 //        ArrayList<ClasificadorSupervisado> clasificadores = new ArrayList<>();
 //        clasificadores.add(new MinimaDistancia());
