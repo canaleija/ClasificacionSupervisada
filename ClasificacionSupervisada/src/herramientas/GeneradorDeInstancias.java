@@ -13,18 +13,18 @@ import objetos.Patron;
  *
  * @author Roberto Cruz Leija
  */
-public class GeneradorDeInstanciasDeEntrenamiento {
+public class GeneradorDeInstancias {
     
     private ArrayList<Patron> bd;
     private ArrayList<Clase> clases;
     private ArrayList<Patron> instanciaFinal;
 
-    public GeneradorDeInstanciasDeEntrenamiento(ArrayList<Patron> bd) {
+    public GeneradorDeInstancias(ArrayList<Patron> bd) {
         this.clases = new ArrayList<>();
         this.instanciaFinal = new ArrayList<>();
         this.bd = bd;
         analizarBD();
-        System.out.println();
+       
     }
     
     public ArrayList<Patron> filtraUniformente (int porcentaje){

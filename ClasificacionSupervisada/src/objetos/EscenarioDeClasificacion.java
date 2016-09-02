@@ -7,7 +7,7 @@ package objetos;
 
 import clasificadores.ClasificadorSupervisado;
 import clasificadores.MinimaDistancia;
-import herramientas.GeneradorDeInstanciasDeEntrenamiento;
+import herramientas.GeneradorDeInstancias;
 import herramientas.Tokenizador;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -33,7 +33,7 @@ public class EscenarioDeClasificacion {
        try {
            // abrir el archivo
            this.bdOriginal = Tokenizador.abrirFile();
-           GeneradorDeInstanciasDeEntrenamiento ge = new GeneradorDeInstanciasDeEntrenamiento(this.bdOriginal);
+           GeneradorDeInstancias ge = new GeneradorDeInstancias(this.bdOriginal);
            this.instanciaEntrenamiento = ge.filtraUniformente(porcentaje);
            // ejecutamos la prueba 
           

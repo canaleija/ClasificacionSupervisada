@@ -75,6 +75,7 @@ public class Tokenizador {
                     "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
             return null;
         }
+       
         return patrones;
     }
     

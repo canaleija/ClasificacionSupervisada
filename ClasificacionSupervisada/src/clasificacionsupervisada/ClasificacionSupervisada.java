@@ -8,13 +8,14 @@ package clasificacionsupervisada;
 import clasificadores.ClasificadorSupervisado;
 import clasificadores.Knn;
 import clasificadores.MinimaDistancia;
-import herramientas.GeneradorDeInstanciasDeEntrenamiento;
+import herramientas.GeneradorDeInstancias;
 import herramientas.Tokenizador;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import objetos.EscenarioDeClasificacion;
+import objetos.Instancias;
 import objetos.Patron;
 
 /**
@@ -29,8 +30,12 @@ public class ClasificacionSupervisada {
     public static void main(String[] args) {
         
         try {
-            GeneradorDeInstanciasDeEntrenamiento gi =
-                    new GeneradorDeInstanciasDeEntrenamiento(Tokenizador.abrirFile());
+              ArrayList<Patron> bd = Tokenizador.abrirFile();
+              Instancias.bdOriginal = bd;
+              Instancias.
+            GeneradorDeInstancias gi =
+                    new GeneradorDeInstancias(bd);
+           
             ArrayList<Patron> ce = gi.filtraUniformente(100);
             
             Knn knn = new Knn(6);
