@@ -53,7 +53,16 @@ public class Knn implements ClasificadorSupervisado{
 
     @Override
     public void clasificaConjunto(ArrayList<Patron> conjunto) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+       // aquí va la tarea
+       // tip : ver el metodo MD (CLASIFICA CONJUNTO)
+        // recorremos todo el conjunto 
+        for (Patron p : conjunto){
+            // obteniendo el resultado de clasifiacion
+        String resultado = clasifica(p);
+        // seteando el resultado
+        p.setClaseRes(resultado);
+        
+        }
     }
 
     private void calculaDistancias(Patron patron) {
