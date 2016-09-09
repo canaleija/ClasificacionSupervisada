@@ -7,6 +7,7 @@ package objetos;
 
 import clasificadores.ClasificadorSupervisado;
 import clasificadores.MinimaDistancia;
+import graficacion.Grafica;
 import herramientas.GeneradorDeInstanciasTODELETE;
 import herramientas.Tokenizador;
 import java.io.IOException;
@@ -21,10 +22,7 @@ import java.util.logging.Logger;
 public class EscenarioDeClasificacion {
 
    
-   
-
-   
-    
+       
     public enum TiposInstancias {N_POR_RANDOM_BD,N_POR_RANDOM_CLASE}
     
    private  ArrayList<ClasificadorSupervisado> clasificadores;
@@ -42,9 +40,10 @@ public class EscenarioDeClasificacion {
     public EscenarioDeClasificacion(ArrayList<ClasificadorSupervisado> clasificadores, int noAmbientes,TiposInstancias[] tipoInstancias,int n0,int n1) throws IOException{
       this.clasificadores = clasificadores;
       this.bdOriginal = Tokenizador.abrirFile();
-      this.rendimientos = new ArrayList<>();
+    
       // crear las ambientes de clasificacion en base a noAmbientes y tipoInstancias
       this.ambientesClasificacion = creaAmbientesDeClasificacion(noAmbientes,tipoInstancias,n0,n1);
+        this.rendimientos = inicializarRendimientos();
     }
 
     
@@ -67,37 +66,34 @@ public class EscenarioDeClasificacion {
     }
    
 
-    public void ejecutaEscenarioDeClasificacion (int porcentaje){
-       try {
-           // abrir el archivo
-           this.bdOriginal = Tokenizador.abrirFile();
-           GeneradorDeInstanciasTODELETE ge = new GeneradorDeInstanciasTODELETE(this.bdOriginal);
-           this.instanciaEntrenamiento = ge.filtraUniformente(porcentaje);
-           // ejecutamos la prueba 
-          
-           // recorrer los diferentes clasificadores para entrenarlos 
+    public void ejecutaEscenarioDeClasificacion (){
+      
+        // ejecutar todos los n ambientes de clasificación 
+        
+        for (int x=0; x<this.ambientesClasificacion.size();x++){
+            // ciclo para obtener los rendimientos de cada ambiente 
+             // recorrer los diferentes clasificadores para entrenarlos 
            // entrenamiento y clasificación
            int iC = 0;
+         
            for (ClasificadorSupervisado clasificador: this.clasificadores){
-             clasificador.entrenar((ArrayList<Patron>) instanciaEntrenamiento.clone());
-             clasificador.clasificaConjunto(bdOriginal);
+             clasificador.entrenar((ArrayList<Patron>) this.ambientesClasificacion.get(x).getiEntrenamiento().clone());
+             clasificador.clasificaConjunto(this.ambientesClasificacion.get(x).getiClasificacion());
+            
              // calculamos el rendimiento 
              int acumulador = 0;
-             for (Patron p: this.bdOriginal){
+             for (Patron p: this.ambientesClasificacion.get(x).getiClasificacion()){
                if (p.verificaClasificacion()){
                 acumulador++;
                }
              }
-             double pCla = (acumulador*100)/this.bdOriginal.size();
-             rendimientos[iC] = pCla;
+             double pCla = (acumulador*100)/this.ambientesClasificacion.get(x).getiClasificacion().size();
+             this.rendimientos.get(iC)[x] = pCla;
              iC++;
            }
-           // que cada uno de los clasificadores clasifique
-                     
-       } catch (IOException ex) {
-           Logger.getLogger(EscenarioDeClasificacion.class.getName()).log(Level.SEVERE, null, ex);
-       }
-    
+                  
+        }
+            
     }
     
    
@@ -123,7 +119,23 @@ public class EscenarioDeClasificacion {
         return aux;
     }
 
+ private ArrayList<Double[]> inicializarRendimientos() {
+    ArrayList<Double[]>  rendimientos = new  ArrayList<>();
+     for (int x=0; x < this.clasificadores.size();x++){
+       rendimientos.add(new Double[this.ambientesClasificacion.size()]);
+     }
+         
+         return rendimientos;
+    }
 
+   public void graficarRendimientos(){
+ 
+    Grafica grafica = new Grafica("Rendimientos","%","Ambiente");
+    for (int x=0; x < this.rendimientos.size();x++){
+        grafica.agregarSerie(this.rendimientos.get(x),this.clasificadores.get(x).getClass().getName()+"-"+x);
+    }
+    grafica.creaYmuestraGrafica();
+   }
   
    
 }

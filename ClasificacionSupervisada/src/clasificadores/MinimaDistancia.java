@@ -21,7 +21,8 @@ public class MinimaDistancia implements ClasificadorSupervisado{
         
     @Override
     public void entrenar(ArrayList<Patron> conjuntoEntrenamiento) {
-       //calcular los vectores representativos
+       this.conjuntoEntrenamiento =conjuntoEntrenamiento;
+        //calcular los vectores representativos
        // analizar, contar, acumualar
        this.medias = new ArrayList<>();
        Media primero = new Media(conjuntoEntrenamiento.get(0).getVector().length);

@@ -47,7 +47,7 @@ public class Knn implements ClasificadorSupervisado{
        herramientas.Herramientas.quicksort(distancias,0,distancias.length-1);
        // verificar los k vecinos mas cercanos : clase resultado
        String resultado = verificarK();
-       System.out.println();
+    
                return resultado;
     }
 
