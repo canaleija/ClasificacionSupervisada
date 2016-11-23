@@ -88,8 +88,15 @@ public class Patron {
     
     
     public boolean verificaClasificacion(){
-      return clase.equals(claseRes);
+      return clase.equals(getClaseRes());
      
+    }
+
+    /**
+     * @return the claseRes
+     */
+    public String getClaseRes() {
+        return claseRes;
     }
     
     

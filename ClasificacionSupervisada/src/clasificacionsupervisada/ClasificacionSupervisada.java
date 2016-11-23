@@ -5,17 +5,18 @@
  */
 package clasificacionsupervisada;
 
+import clasificadores.Cap;
 import clasificadores.ClasificadorSupervisado;
 import clasificadores.Knn;
 import clasificadores.MinimaDistancia;
+import herramientas.MatrizDeConfusion;
 import herramientas.Tokenizador;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import objetos.AmbienteDeClasificacion;
+import jdk.nashorn.internal.parser.Token;
 import objetos.EscenarioDeClasificacion;
-import objetos.Instancias;
 import objetos.Patron;
 
 /**
@@ -30,15 +31,23 @@ public class ClasificacionSupervisada {
     public static void main(String[] args) {
        
         try {
-            ArrayList<ClasificadorSupervisado> clasificadores = new ArrayList<>();
-            clasificadores.add(new Knn(4) );
-            clasificadores.add(new MinimaDistancia() );
             
-           // clasificadores.add(new MinimaDistancia() );
+            Cap md = new Cap();
+            ArrayList<Patron> instancias = Tokenizador.abrirFile();
+            md.entrenar(instancias);
+            //md.clasificaConjunto(instancias);
             
-            EscenarioDeClasificacion e1 = new EscenarioDeClasificacion(clasificadores, 500, new EscenarioDeClasificacion.TiposInstancias[]{EscenarioDeClasificacion.TiposInstancias.N_POR_RANDOM_BD,EscenarioDeClasificacion.TiposInstancias.N_POR_RANDOM_CLASE},100, 100);
-            e1.ejecutaEscenarioDeClasificacion();
-            e1.graficarRendimientos();
+            MatrizDeConfusion mCon = new MatrizDeConfusion(instancias);
+            
+//            ArrayList<ClasificadorSupervisado> clasificadores = new ArrayList<>();
+//            clasificadores.add(new Knn(4) );
+//            clasificadores.add(new MinimaDistancia() );
+//            
+//           // clasificadores.add(new MinimaDistancia() );
+//            
+//            EscenarioDeClasificacion e1 = new EscenarioDeClasificacion(clasificadores, 500, new EscenarioDeClasificacion.TiposInstancias[]{EscenarioDeClasificacion.TiposInstancias.N_POR_RANDOM_BD,EscenarioDeClasificacion.TiposInstancias.N_POR_RANDOM_CLASE},100, 100);
+//            e1.ejecutaEscenarioDeClasificacion();
+//            e1.graficarRendimientos();
         
 //              ArrayList<Patron> bd = Tokenizador.abrirFile();
 //              Instancias.bdOriginal = bd;

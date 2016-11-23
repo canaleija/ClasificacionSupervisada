@@ -54,7 +54,7 @@ public class Instancias {
       }
     return auxI;
    }
-    private static void analizarBD() {
+    public static void analizarBD() {
        
         clases = new ArrayList<>();
     
